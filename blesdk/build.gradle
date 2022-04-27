@@ -50,7 +50,7 @@ dependencies {
     implementation deps.support.app_compat
     implementation deps.support.core_ktx
     implementation deps.constraint_layout
-    api deps.permission
+    implementation deps.permission
     testImplementation deps.junit
     androidTestImplementation deps.atsl.runner
     androidTestImplementation deps.atsl.ext_junit
@@ -64,7 +64,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.eastup' //your git id
                 artifactId = 'blesdk' //your-repository
-                version = '1.0.2' // As same as the Tag
+                version = '1.0.3' // As same as the Tag
             }
         }
     }
