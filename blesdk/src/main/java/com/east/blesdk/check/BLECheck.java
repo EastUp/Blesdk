@@ -26,9 +26,9 @@ import android.os.Build;
 
 import com.east.blesdk.BLESdk;
 import com.east.blesdk.util.BLELog;
+import com.east.permission.PermissionCheckUtils;
 
 import pub.devrel.easypermissions.EasyPermissions;
-
 
 /**
  *|---------------------------------------------------------------------------------------------------------------|
@@ -132,19 +132,7 @@ public class BLECheck{
         }
 
         String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION};
-        return EasyPermissions.hasPermissions(context, perms);
-    }
-
-    /**
-     * 申请蓝牙权限
-     *
-     * @param activity
-     * @param rationale
-     * @param requestCode
-     */
-    public void requestBlePermission(Activity activity, String rationale, int requestCode) {
-        EasyPermissions.requestPermissions(activity, rationale, requestCode,
-                Manifest.permission.ACCESS_COARSE_LOCATION);
+        return PermissionCheckUtils.hasPermissions(context, perms);
     }
 
     /**
