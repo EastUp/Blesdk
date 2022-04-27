@@ -24,8 +24,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import com.east.blesdk.BLESdk;
-
-import pub.devrel.easypermissions.EasyPermissions;
+import com.east.permission.PermissionCheckUtils;
 
 /**
  * @package_name com.e.ble.check
@@ -44,7 +43,7 @@ public class BLECheckUtil {
      * @return
      */
     public static boolean hasBlePermission(Context context) {
-        return EasyPermissions.hasPermissions(context, Manifest.permission.ACCESS_COARSE_LOCATION);
+        return PermissionCheckUtils.hasPermissions(context, Manifest.permission.ACCESS_COARSE_LOCATION);
     }
 
     public static boolean isSupportBle(Context context) {
@@ -57,18 +56,6 @@ public class BLECheckUtil {
             return false;
         }
         return bluetoothAdapter.isEnabled();
-    }
-
-    /**
-     * 申请蓝牙权限
-     *
-     * @param activity
-     * @param rationale
-     * @param requestCode
-     */
-    public static void requestBlePermission(Activity activity, String rationale, int requestCode) {
-        EasyPermissions.requestPermissions(activity, rationale, requestCode,
-                Manifest.permission.ACCESS_COARSE_LOCATION);
     }
 
     public static void openBle() {
