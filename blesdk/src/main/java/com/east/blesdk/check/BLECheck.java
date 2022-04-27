@@ -28,8 +28,6 @@ import com.east.blesdk.BLESdk;
 import com.east.blesdk.util.BLELog;
 import com.east.permission.PermissionCheckUtils;
 
-import pub.devrel.easypermissions.EasyPermissions;
-
 /**
  *|---------------------------------------------------------------------------------------------------------------|
  *  蓝牙检测工具
