@@ -24,13 +24,13 @@ package com.east.blesdk.check;
 public interface BLECheckListener {
 
     //没有蓝牙权限
-    void noBluetoothPermission();
+    default void noBluetoothPermission(){};
 
     //不支持蓝牙
-    void notSupportBle();
+    default void notSupportBle(){};
 
     //蓝牙未打开
-    void bleClosing();
+    default void bleClosing(){};
 
-    void bleStateOK();
+    default void bleStateOK(){};
 }

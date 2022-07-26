@@ -25,9 +25,9 @@ package com.east.blesdk.control.listener;
  */
 public interface BLEStateChangeListener {
 
-	void onStateConnected(String address);
+	default void onStateConnected(String address){};
 
-	void onStateConnecting(String address);
+	default void onStateConnecting(String address){};
 
-	void onStateDisConnected(String address);
+	default void onStateDisConnected(String address){};
 }

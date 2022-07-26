@@ -32,25 +32,25 @@ public interface BLETransportListener {
     /**
      * 回调描述符读取操作结果
      */
-    void onDescriptorRead(BluetoothGatt gatt, String address);
+    default void onDescriptorRead(BluetoothGatt gatt, String address){};
 
     /**
      * 回调描述符写入操作结果(订阅成功后会回调这个方法)
      */
-    void onDescriptorWrite(BluetoothGatt gatt,String address);
+    default void onDescriptorWrite(BluetoothGatt gatt,String address){};
 
     /**
      * 回调报告特征读取操作的结果。
      */
-    void onCharacteristicRead(BluetoothGatt gatt,BLECharacteristic bleCharacteristic);
+    default void onCharacteristicRead(BluetoothGatt gatt,BLECharacteristic bleCharacteristic){};
 
     /**
      * 特征写入操作的回调
      */
-    void onCharacteristicWrite(BluetoothGatt gatt,BLECharacteristic bleCharacteristic);
+    default void onCharacteristicWrite(BluetoothGatt gatt,BLECharacteristic bleCharacteristic){};
 
     /**
      * 当特征改变的时候(设备通过Notification发送数据过来时)，回调该方法
      */
-    void onCharacteristicChanged(BluetoothGatt gatt,BLECharacteristic bleCharacteristic);//当设备通过Notification发送数据过来时，回调该方法
+    default void onCharacteristicChanged(BluetoothGatt gatt,BLECharacteristic bleCharacteristic){};//当设备通过Notification发送数据过来时，回调该方法
 }

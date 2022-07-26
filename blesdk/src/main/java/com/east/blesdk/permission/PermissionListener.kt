@@ -8,6 +8,6 @@ package com.east.blesdk.permission
  * |---------------------------------------------------------------------------------------------------------------|
  */
 interface PermissionListener {
-    fun onGranted()
-    fun onCancel()
+    fun onGranted(){}
+    fun onCancel(){}
 }

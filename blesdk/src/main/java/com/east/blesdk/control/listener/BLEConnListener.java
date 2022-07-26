@@ -33,19 +33,19 @@ public interface BLEConnListener {
      * @param address
      * @param errorCode
      */
-    void onConnError(String address, int errorCode);
+    default void onConnError(String address, int errorCode){};
 
     /**
      * 设备连接成功,设备服务 Discovered完毕后会回调(开启通知接受蓝牙数据返回)
      * 一般在这个方法里面开启通知，接受数据返回
      * @param address
      */
-    void onConnSuccessAndServicesDiscovered(BluetoothGatt gatt,String address);
+    default void onConnSuccessAndServicesDiscovered(BluetoothGatt gatt,String address){};
 
     /**
      * 设备已经连接
      * @param address
      */
-    void onAlreadyConnected(String address);
+    default void onAlreadyConnected(String address){};
 
 }

@@ -26,7 +26,7 @@ package com.east.blesdk.control.listener;
  */
 public interface BLEReadRssiListener {
 
-	void onReadRssi(String address, int rssi);//获取蓝牙设备的信号
+	default void onReadRssi(String address, int rssi){};//获取蓝牙设备的信号
 
-	void onReadRssiError(String address, int errorCode);
+	default void onReadRssiError(String address, int errorCode){};
 }
