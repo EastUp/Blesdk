@@ -3,6 +3,7 @@ package com.east.blesdk.permission
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.net.Uri
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
@@ -19,6 +20,13 @@ import com.east.permission.rxpermissions.RxPermissions
  */
 object BLEPermissionCheckUtils {
     fun checkPermission(activity: FragmentActivity,listener : PermissionListener) {
+        val lm = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val open = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if (!open) {
+            showNeedGpsOpenDialog(activity)
+            return
+        }
+
         val permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -46,6 +54,12 @@ object BLEPermissionCheckUtils {
     }
 
     fun checkPermission(fragment: Fragment, listener : PermissionListener) {
+        val lm = fragment.requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val open = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if (!open) {
+            showNeedGpsOpenDialog(fragment.requireContext())
+            return
+        }
         val permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -64,7 +78,7 @@ object BLEPermissionCheckUtils {
                 }
                 else -> {
                     showMissingPermissionDialog(
-                        fragment.context!!,
+                        fragment.requireContext(),
                         listener
                     )
                 }
@@ -106,5 +120,30 @@ object BLEPermissionCheckUtils {
         intent.data = Uri.parse("package:${context.packageName}")
         context.startActivity(intent)
 //        finish()
+    }
+
+    /**
+     * 进入位置gps界面
+     */
+    fun showNeedGpsOpenDialog(context: Context) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("提示")
+        builder.setMessage("受权限影响，蓝牙需要打开gps才能使用")
+
+        // 拒绝, 退出应用
+        builder.setNegativeButton(
+            "取消"
+        ) { _, _ ->  }
+
+        builder.setPositiveButton(
+            "设置"
+        ) { _, _ ->
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            context.startActivity(intent)
+        }
+
+        builder.setCancelable(false)
+
+        builder.show()
     }
 }
