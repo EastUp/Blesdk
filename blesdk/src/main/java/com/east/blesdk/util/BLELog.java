@@ -113,4 +113,41 @@ public class BLELog {
 				"LineNumber : " + e.getLineNumber() + "\n";
 	}
 
+
+	/**
+	 * @param msg
+	 */
+	public static void eNew(String msg) {
+		if(!needInfo)
+			return;
+		Log.e(TAG, msg);
+	}
+
+	/**
+	 * @param msg
+	 */
+	public static void dNew(String msg) {
+		if(!needInfo)
+			return;
+		Log.d(TAG, msg);
+	}
+
+	/**
+	 * @param msg
+	 */
+	public static void iNew(String msg) {
+		if(!needInfo)
+			return;
+		Log.i(TAG, msg);
+	}
+
+	/**
+	 * @param msg
+	 */
+	public static void wNew(String msg) {
+		if(!needInfo)
+			return;
+		Log.w(TAG, msg);
+	}
+
 }

@@ -90,7 +90,7 @@ class BLEGattCallBack extends BluetoothGattCallback {
         // 此时，发数据给设备并不能接收到设备，
         // 必须先 ENABLE_NOTIFICATION_VALUE，才可用
         for (BluetoothGattService service: gatt.getServices()) {
-            BLELog.d("find service：" + service.getUuid() + "\n");
+            BLELog.dNew("find service：" + service.getUuid() + "\n");
             for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
                 int charaProp = characteristic.getProperties();
                 String text = "";
@@ -110,9 +110,9 @@ class BLEGattCallBack extends BluetoothGattCallback {
                         ) {
                     text = "notify | indication";
                 }
-                BLELog.d("-------find characteristic：" + text + "----" + charaProp + "--uuid:" + characteristic.getUuid() +"\n");
+                BLELog.dNew("-------find characteristic：" + text + "----" + charaProp + "--uuid:" + characteristic.getUuid() +"\n");
                 for (BluetoothGattDescriptor descriptor : characteristic.getDescriptors()) {
-                    BLELog.d("--------------find descriptor：" + descriptor.getUuid() + "\n");
+                    BLELog.dNew("--------------find descriptor：" + descriptor.getUuid() + "\n");
                 }
             }
         }
