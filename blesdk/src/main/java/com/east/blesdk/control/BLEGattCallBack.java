@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -88,6 +89,33 @@ class BLEGattCallBack extends BluetoothGattCallback {
         // 如果蓝牙回复数据是通过notify的方式
         // 此时，发数据给设备并不能接收到设备，
         // 必须先 ENABLE_NOTIFICATION_VALUE，才可用
+        for (BluetoothGattService service: gatt.getServices()) {
+            BLELog.d("find service：" + service.getUuid() + "\n");
+            for (BluetoothGattCharacteristic characteristic : service.getCharacteristics()) {
+                int charaProp = characteristic.getProperties();
+                String text = "";
+                // 可读
+                if ((charaProp & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
+                    text = "read";
+                }
+                // 可写，注：要 & 其可写的两个属性
+                if ((charaProp & BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0
+                        || (charaProp & BluetoothGattCharacteristic.PROPERTY_WRITE) > 0
+                        ) {
+                    text = "write";
+                }
+                // 可通知，可指示
+                if ((charaProp & BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0
+                        || (charaProp & BluetoothGattCharacteristic.PROPERTY_INDICATE) > 0
+                        ) {
+                    text = "notify | indication";
+                }
+                BLELog.d("-------find characteristic：" + text + "----" + charaProp + "--uuid:" + characteristic.getUuid() +"\n");
+                for (BluetoothGattDescriptor descriptor : characteristic.getDescriptors()) {
+                    BLELog.d("--------------find descriptor：" + descriptor.getUuid() + "\n");
+                }
+            }
+        }
 
         mHandler.post(new Runnable() {
             @Override
