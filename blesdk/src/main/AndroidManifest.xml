@@ -1,11 +1,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.east.blesdk" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.east.blesdk">
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!--在Android 6-11的机型上如果使用蓝牙搜索设备，仍然需要请求定位权限和以前的蓝牙权限BLUETOOTH、BLUETOOTH_ADMIN，那么如何声明权限呢？
+    在清单文件中可以使用android:maxSdkVersion="30"限定需要申请权限的Android版本，这样在Android 12及以上机型上，
+    应用详情中的权限列表将不会列出这些权限。如果应用中除蓝牙外其他功能还需要使用定位权限，请勿针对ACCESS_COARSE_LOCATION、ACCESS_FINE_LOCATION
+    这两个权限添加android:maxSdkVersion限制。-->
+    <!-- Android 12以下才需要定位权限， Android 9以下官方建议申请ACCESS_COARSE_LOCATION -->
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <!--特别需要注意的是，Android 12及以上机型，如果想不申请定位权限就能搜索到设备，必须在BLUETOOTH_SCAN权限上加上
+    android:usesPermissionFlags="neverForLocation"，否则仍需申请定位权限。-->
+    <!-- Android 12在不申请定位权限时，必须加上android:usesPermissionFlags="neverForLocation"，否则搜不到设备 -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />

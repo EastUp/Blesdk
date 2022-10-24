@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -27,10 +28,20 @@ object BLEPermissionCheckUtils {
             return
         }
 
-        val permissions = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        )
+        val permissions = // Android 版本大于等于 12 时，申请新的蓝牙权限
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                arrayOf(
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_ADVERTISE,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                )
+                //根据实际需要申请定位权限
+            } else {
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            }
         val rxPermissions = RxPermissions(activity)
         rxPermissions.requestEachCombined(*permissions).subscribe {
             when {
@@ -60,10 +71,20 @@ object BLEPermissionCheckUtils {
             showNeedGpsOpenDialog(fragment.requireContext())
             return
         }
-        val permissions = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
+        val permissions = // Android 版本大于等于 12 时，申请新的蓝牙权限
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                arrayOf(
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_ADVERTISE,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                )
+                //根据实际需要申请定位权限
+            } else {
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            }
         val rxPermissions = RxPermissions(fragment)
         rxPermissions.requestEachCombined(*permissions).subscribe {
             when {
