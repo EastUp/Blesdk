@@ -330,6 +330,9 @@ class BLEGattCallBack extends BluetoothGattCallback {
                         mBLEStateChangeListener.onStateDisConnected(address);
                     //断开连接
                     BLEConnList.get().delConnDevice(address);
+                    //关闭gatt （这里添加上，避免重新连接时接收到的数据重复）
+                    if(gatt!= null)
+                        gatt.close();
                     return;
                 }
 
